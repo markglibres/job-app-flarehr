@@ -1,5 +1,5 @@
+using BattleShip.Application.Constants;
 using BattleShip.Application.Services;
-using BattleShip.Domain.Constants;
 using BattleShip.Domain.SeedWork;
 using Xunit;
 
@@ -19,18 +19,10 @@ namespace BattleShip.Application.Test
         }
 
         [Fact]
-        public void Should_Create_Empty_Board()
+        public void Should_Create_Board()
         {
             // Assert
             Assert.NotNull(_board);
-
-            for (var row = 0; row < _board.Rows; row++)
-            {
-                for (var column = 0; column < _board.Columns; column++)
-                {
-                    Assert.True(string.IsNullOrWhiteSpace(_board.GetShipId(row, column)));
-                }
-            }
         }
 
         [Fact]

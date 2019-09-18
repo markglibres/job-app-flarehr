@@ -1,4 +1,4 @@
-﻿namespace BattleShip.Domain.Constants
+﻿namespace BattleShip.Application.Constants
 {
     public enum BoardOrientation
     {

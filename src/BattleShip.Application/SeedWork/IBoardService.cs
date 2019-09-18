@@ -1,5 +1,5 @@
-﻿using BattleShip.Domain.Constants;
-using BattleShip.Domain.SeedWork;
+﻿using BattleShip.Domain.SeedWork;
+using BoardOrientation = BattleShip.Application.Constants.BoardOrientation;
 
 namespace BattleShip.Application.SeedWork
 {

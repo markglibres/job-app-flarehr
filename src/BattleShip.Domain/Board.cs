@@ -5,7 +5,7 @@ namespace BattleShip.Domain
 {
     public class Board : IBoard
     {
-        private string[,] _area;
+        private readonly string[,] _area;
 
         public Board(int rows, int columns)
         {
