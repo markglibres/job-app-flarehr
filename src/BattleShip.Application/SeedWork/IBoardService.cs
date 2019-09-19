@@ -10,7 +10,8 @@ namespace BattleShip.Application.SeedWork
         bool AddShip(
             IBoard board,
             BoardOrientation orientation,
-            int startingPoint,
+            int row,
+            int column,
             int length);
 
         bool Attack(

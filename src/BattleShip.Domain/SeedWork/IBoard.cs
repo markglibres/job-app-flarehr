@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace BattleShip.Domain.SeedWork
 {
@@ -7,6 +8,8 @@ namespace BattleShip.Domain.SeedWork
         int Rows { get; }
         int Columns { get; }
 
-        string GetShipId(int row, int column);
+        string GetShipId(Point point);
+        bool AddShip(IShip ship);
+        bool IsVacant(IEnumerable<Point> location);
     }
 }

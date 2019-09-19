@@ -1,6 +1,10 @@
+using System.Collections.Generic;
+using System.Drawing;
 using BattleShip.Application.Constants;
 using BattleShip.Application.Services;
+using BattleShip.Application.Test.Data;
 using BattleShip.Domain.SeedWork;
+using Moq;
 using Xunit;
 
 namespace BattleShip.Application.Test
@@ -18,11 +22,87 @@ namespace BattleShip.Application.Test
             _board = _boardService.CreateBoard();
         }
 
+        [Theory]
+        [ClassData(typeof(BoardServiceCoordinatesTestData))]
+        public void Should_Calculate_Coordinates(
+            BoardOrientation orientation,
+            int startRow,
+            int startColumn,
+            int length,
+            IEnumerable<Point> expectedPoints)
+        {
+            // Arrange
+            var fakeBoard = new Mock<IBoard>();
+            var location = new List<Point>();
+            fakeBoard.Setup(board => board.IsVacant(It.IsAny<IEnumerable<Point>>()))
+                .Callback((IEnumerable<Point> coordinates) => { location.AddRange(coordinates); })
+                .Returns(true);
+            fakeBoard.Setup(board => board.AddShip(It.IsAny<IShip>()))
+                .Returns(true);
+
+            // Act
+            _boardService
+                .AddShip(
+                    fakeBoard.Object,
+                    orientation,
+                    startRow,
+                    startColumn,
+                    length);
+
+            // Assert
+            Assert.All(expectedPoints,
+                point => { Assert.Contains(point, location); });
+        }
+
         [Fact]
         public void Should_Create_Board()
         {
             // Assert
             Assert.NotNull(_board);
+        }
+
+        [Fact]
+        public void Should_Create_Ship_If_Coordinates_Are_Vacant()
+        {
+            // Arrange
+            var fakeBoard = new Mock<IBoard>();
+            fakeBoard.Setup(board => board.AddShip(It.IsAny<IShip>()))
+                .Returns(true);
+            fakeBoard.Setup(board => board.IsVacant(It.IsAny<IEnumerable<Point>>()))
+                .Returns(true);
+            // Act
+            _boardService
+                .AddShip(
+                    fakeBoard.Object,
+                    BoardOrientation.Vertical,
+                    10,
+                    15,
+                    10);
+
+            // Assert
+            fakeBoard.Verify(board => board.AddShip(It.IsAny<IShip>()), Times.Once);
+        }
+
+        [Fact]
+        public void Should_Not_Create_Ship_If_Coordinates_Are_Occupied()
+        {
+            // Arrange
+            var fakeBoard = new Mock<IBoard>();
+            fakeBoard.Setup(board => board.AddShip(It.IsAny<IShip>()))
+                .Returns(false);
+            fakeBoard.Setup(board => board.IsVacant(It.IsAny<IEnumerable<Point>>()))
+                .Returns(false);
+            // Act
+            _boardService
+                .AddShip(
+                    fakeBoard.Object,
+                    BoardOrientation.Vertical,
+                    10,
+                    15,
+                    10);
+
+            // Assert
+            fakeBoard.Verify(board => board.AddShip(It.IsAny<IShip>()), Times.Never);
         }
 
         [Fact]
@@ -44,21 +124,6 @@ namespace BattleShip.Application.Test
 
             // Assert
             Assert.False(sunk);
-        }
-
-        [Fact]
-        public void Should_Return_True_When_Creating_Ship()
-        {
-            // Act
-            var isSuccess = _boardService
-                .AddShip(
-                    _board,
-                    BoardOrientation.Vertical,
-                    0,
-                    10);
-
-            // Assert
-            Assert.True(isSuccess);
         }
     }
 }

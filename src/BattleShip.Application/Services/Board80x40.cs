@@ -1,4 +1,7 @@
-﻿using BattleShip.Application.SeedWork;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using BattleShip.Application.SeedWork;
 using BattleShip.Domain;
 using BattleShip.Domain.SeedWork;
 using BoardOrientation = BattleShip.Application.Constants.BoardOrientation;
@@ -16,10 +19,23 @@ namespace BattleShip.Application.Services
         public bool AddShip(
             IBoard board, 
             BoardOrientation orientation, 
-            int startingPoint, 
+            int row, 
+            int column,
             int length)
         {
-            return true;
+            var coordinates = GetCoordinates(orientation,
+                row,
+                column,
+                length)
+                .ToList();
+
+            if (!board.IsVacant(coordinates.Select(c => c.Location)))
+            {
+                return false;
+            }
+
+            var ship = new Ship(coordinates);
+            return board.AddShip(ship);
         }
 
         public bool Attack(
@@ -33,6 +49,38 @@ namespace BattleShip.Application.Services
         public bool IsSunk(IBoard board)
         {
             return false;
+        }
+
+        private IEnumerable<Coordinate> GetCoordinates(
+            BoardOrientation orientation,
+            int row,
+            int column,
+            int length)
+        {
+            var endRow = row;
+            var endColumn = column;
+
+            if (orientation == BoardOrientation.Vertical)
+            {
+                endRow += length;
+                endColumn++;
+            }
+            else
+            {
+                endRow++;
+                endColumn += length;
+            }
+
+            var coordinates = new List<Coordinate>();
+            for (var i = row; i < endRow; i++)
+            {
+                for (var j = column; j < endColumn; j++)
+                {
+                    coordinates.Add(new Coordinate(i,j));
+                }
+            }
+
+            return coordinates;
         }
     }
 
