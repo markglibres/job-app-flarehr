@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
+using AutoFixture;
+using AutoFixture.AutoMoq;
 using BattleShip.Application.Constants;
 using BattleShip.Application.Services;
 using BattleShip.Application.Test.Data;
@@ -11,15 +13,19 @@ namespace BattleShip.Application.Test
 {
     public class BoardServiceTests
     {
+        private readonly IFixture _fixture;
+
         private readonly Board80X40 _boardService;
         private readonly IBoard _board;
+        private IBoard _fakeBoard;
 
         public BoardServiceTests()
         {
             // Arrange
-            _boardService = new Board80X40();
-
+            _fixture = new Fixture().Customize(new AutoMoqCustomization());
+            _boardService = _fixture.Create<Board80X40>();
             _board = _boardService.CreateBoard();
+            _fakeBoard = _fixture.Create<IBoard>();
         }
 
         [Theory]
@@ -32,18 +38,20 @@ namespace BattleShip.Application.Test
             IEnumerable<Point> expectedPoints)
         {
             // Arrange
-            var fakeBoard = new Mock<IBoard>();
             var location = new List<Point>();
-            fakeBoard.Setup(board => board.IsVacant(It.IsAny<IEnumerable<Point>>()))
+            
+            Mock.Get(_fakeBoard)
+                .Setup(board => board.IsVacant(It.IsAny<IEnumerable<Point>>()))
                 .Callback((IEnumerable<Point> coordinates) => { location.AddRange(coordinates); })
                 .Returns(true);
-            fakeBoard.Setup(board => board.AddShip(It.IsAny<IShip>()))
+            Mock.Get(_fakeBoard)
+                .Setup(board => board.AddShip(It.IsAny<IShip>()))
                 .Returns(true);
 
             // Act
             _boardService
                 .AddShip(
-                    fakeBoard.Object,
+                    _fakeBoard,
                     orientation,
                     startRow,
                     startColumn,
@@ -65,44 +73,50 @@ namespace BattleShip.Application.Test
         public void Should_Create_Ship_If_Coordinates_Are_Vacant()
         {
             // Arrange
-            var fakeBoard = new Mock<IBoard>();
-            fakeBoard.Setup(board => board.AddShip(It.IsAny<IShip>()))
+            Mock.Get(_fakeBoard)
+                .Setup(board => board.AddShip(It.IsAny<IShip>()))
                 .Returns(true);
-            fakeBoard.Setup(board => board.IsVacant(It.IsAny<IEnumerable<Point>>()))
+            Mock.Get(_fakeBoard)
+                .Setup(board => board.IsVacant(It.IsAny<IEnumerable<Point>>()))
                 .Returns(true);
+
             // Act
             _boardService
                 .AddShip(
-                    fakeBoard.Object,
+                    _fakeBoard,
                     BoardOrientation.Vertical,
                     10,
                     15,
                     10);
 
             // Assert
-            fakeBoard.Verify(board => board.AddShip(It.IsAny<IShip>()), Times.Once);
+            Mock.Get(_fakeBoard)
+                .Verify(board => board.AddShip(It.IsAny<IShip>()), Times.Once);
         }
 
         [Fact]
         public void Should_Not_Create_Ship_If_Coordinates_Are_Occupied()
         {
             // Arrange
-            var fakeBoard = new Mock<IBoard>();
-            fakeBoard.Setup(board => board.AddShip(It.IsAny<IShip>()))
+            Mock.Get(_fakeBoard)
+                .Setup(board => board.AddShip(It.IsAny<IShip>()))
                 .Returns(false);
-            fakeBoard.Setup(board => board.IsVacant(It.IsAny<IEnumerable<Point>>()))
+            Mock.Get(_fakeBoard)
+                .Setup(board => board.IsVacant(It.IsAny<IEnumerable<Point>>()))
                 .Returns(false);
+
             // Act
             _boardService
                 .AddShip(
-                    fakeBoard.Object,
+                    _fakeBoard,
                     BoardOrientation.Vertical,
                     10,
                     15,
                     10);
 
             // Assert
-            fakeBoard.Verify(board => board.AddShip(It.IsAny<IShip>()), Times.Never);
+            Mock.Get(_fakeBoard)
+                .Verify(board => board.AddShip(It.IsAny<IShip>()), Times.Never);
         }
 
         [Fact]

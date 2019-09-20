@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
+using AutoFixture;
+using AutoFixture.AutoMoq;
 using BattleShip.Domain.Test.Data;
 using Xunit;
 
@@ -11,23 +11,14 @@ namespace BattleShip.Domain.Test
     public class BoardTests
     {
         private readonly Board _board;
+        private readonly IFixture _fixture;
 
         public BoardTests()
         {
-            _board = new Board(80, 40);
-        }
+            _fixture = new Fixture().Customize(new AutoMoqCustomization());
+            _fixture.Register(() => new Board(80, 40));
 
-        [Fact]
-        public void Should_Create_Board_With_Empty_Slots()
-        {
-            // Assert
-            for (var row = 0; row < _board.Rows; row++)
-            {
-                for (var column = 0; column < _board.Columns; column++)
-                {
-                    Assert.True(string.IsNullOrWhiteSpace(_board.GetShipId(new Point(row, column))));
-                }
-            }
+            _board = _fixture.Create<Board>();
         }
 
         [Theory]
@@ -45,7 +36,6 @@ namespace BattleShip.Domain.Test
 
             // Assert
             Assert.False(isVacant);
-
         }
 
         [Theory]
@@ -63,7 +53,19 @@ namespace BattleShip.Domain.Test
 
             // Assert
             Assert.True(isVacant);
+        }
 
+        [Fact]
+        public void Should_Create_Board_With_Empty_Slots()
+        {
+            // Assert
+            for (var row = 0; row < _board.Rows; row++)
+            {
+                for (var column = 0; column < _board.Columns; column++)
+                {
+                    Assert.True(string.IsNullOrWhiteSpace(_board.GetShipId(new Point(row, column))));
+                }
+            }
         }
     }
 }

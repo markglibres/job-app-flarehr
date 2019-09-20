@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleShip.Console
+namespace BattleShip
 {
     class Program
     {
