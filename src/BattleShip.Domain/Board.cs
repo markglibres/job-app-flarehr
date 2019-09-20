@@ -23,12 +23,8 @@ namespace BattleShip.Domain
 
         public bool IsSunk()
         {
-            if (!_ships.Any()) return false;
-
-            var operational = _ships
-                .Where(ship => ship.Status == ShipStatus.Operational);
-
-            return !operational.Any();
+            return _ships.Any() 
+                   && _ships.All(ship => ship.Status != ShipStatus.Operational);
         }
 
         public string GetShipId(Point point)
