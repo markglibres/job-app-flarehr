@@ -47,7 +47,7 @@ namespace BattleShip.Application.Services
             return false;
         }
 
-        private IEnumerable<Coordinate> GetCoordinates(
+        private static IEnumerable<Coordinate> GetCoordinates(
             BoardOrientation orientation,
             int row,
             int column,
