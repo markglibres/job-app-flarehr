@@ -130,14 +130,5 @@ namespace BattleShip.Application.Test
             Assert.False(hit);
         }
 
-        [Fact]
-        public void Should_Return_False_If_Not_All_Ships_Are_Sunk()
-        {
-            // Act
-            var sunk = _boardService.IsSunk(_board);
-
-            // Assert
-            Assert.False(sunk);
-        }
     }
 }

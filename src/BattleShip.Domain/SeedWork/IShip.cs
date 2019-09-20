@@ -10,6 +10,7 @@ namespace BattleShip.Domain.SeedWork
         Guid Id { get; }
         IEnumerable<Coordinate> Coordinates { get; }
         ShipStatus Status { get; }
+        void Hit(Point point);
 
     }
 }

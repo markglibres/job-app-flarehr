@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using BattleShip.Domain.Constants;
 
 namespace BattleShip.Domain.SeedWork
 {
     public interface IBoard
     {
-        int Rows { get; }
-        int Columns { get; }
-
+        bool IsSunk();
         string GetShipId(Point point);
         bool AddShip(IShip ship);
         bool IsVacant(IEnumerable<Point> location);

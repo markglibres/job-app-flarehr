@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using BattleShip.Application.SeedWork;
 using BattleShip.Domain;
+using BattleShip.Domain.Constants;
 using BattleShip.Domain.SeedWork;
 using BoardOrientation = BattleShip.Application.Constants.BoardOrientation;
 
@@ -42,11 +43,6 @@ namespace BattleShip.Application.Services
             IBoard board,
             int xCoordinate,
             int yCoordinate)
-        {
-            return false;
-        }
-
-        public bool IsSunk(IBoard board)
         {
             return false;
         }

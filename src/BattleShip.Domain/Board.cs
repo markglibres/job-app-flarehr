@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using BattleShip.Domain.Constants;
 using BattleShip.Domain.SeedWork;
 
 namespace BattleShip.Domain
@@ -12,7 +13,6 @@ namespace BattleShip.Domain
         public int Rows { get; }
         public int Columns { get; }
 
-
         public Board(int rows, int columns)
         {
             Rows = rows;
@@ -21,7 +21,16 @@ namespace BattleShip.Domain
             _ships = new List<IShip>();
         }
 
-        
+        public bool IsSunk()
+        {
+            if (!_ships.Any()) return false;
+
+            var operational = _ships
+                .Where(ship => ship.Status == ShipStatus.Operational);
+
+            return !operational.Any();
+        }
+
         public string GetShipId(Point point)
         {
             return _area[point.X, point.Y];
