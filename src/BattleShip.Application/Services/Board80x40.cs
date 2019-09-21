@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using BattleShip.Application.Constants;
 using BattleShip.Application.SeedWork;
@@ -18,13 +19,11 @@ namespace BattleShip.Application.Services
         public bool AddShip(
             IBoard board,
             BoardOrientation orientation,
-            int row,
-            int column,
+            Point startingLocation,
             int length)
         {
             var coordinates = GetCoordinates(orientation,
-                    row,
-                    column,
+                    startingLocation,
                     length)
                 .ToList();
 
@@ -39,8 +38,7 @@ namespace BattleShip.Application.Services
 
         public bool Attack(
             IBoard board,
-            int xCoordinate,
-            int yCoordinate)
+            Point location)
         {
             return false;
         }
@@ -52,12 +50,11 @@ namespace BattleShip.Application.Services
 
         private static IEnumerable<Coordinate> GetCoordinates(
             BoardOrientation orientation,
-            int row,
-            int column,
+            Point startingLocation,
             int length)
         {
-            var endRow = row;
-            var endColumn = column;
+            var endRow = startingLocation.X;
+            var endColumn = startingLocation.Y;
 
             if (orientation == BoardOrientation.Vertical)
             {
@@ -71,9 +68,9 @@ namespace BattleShip.Application.Services
             }
 
             var coordinates = new List<Coordinate>();
-            for (var i = row; i < endRow; i++)
+            for (var i = startingLocation.X; i < endRow; i++)
             {
-                for (var j = column; j < endColumn; j++)
+                for (var j = startingLocation.Y; j < endColumn; j++)
                 {
                     coordinates.Add(new Coordinate(i, j));
                 }

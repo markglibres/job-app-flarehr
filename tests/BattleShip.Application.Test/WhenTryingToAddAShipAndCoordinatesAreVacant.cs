@@ -8,7 +8,7 @@ using Xunit;
 
 namespace BattleShip.Application.Test
 {
-    public class WhenTryingToAddAShipAndCoordinatesAreVacant : GivenFakeBoard
+    public class WhenTryingToAddAShipAndCoordinatesAreVacant : GivenMockableBoard
     {
         private List<Point> _location;
 
@@ -16,11 +16,11 @@ namespace BattleShip.Application.Test
         {
             base.Arrange();
             _location = new List<Point>();
-            Mock.Get(Board)
+            Mock.Get(MockableBoard)
                 .Setup(board => board.IsVacant(It.IsAny<IEnumerable<Point>>()))
                 .Callback((IEnumerable<Point> coordinates) => { _location.AddRange(coordinates); })
                 .Returns(true);
-            Mock.Get(Board)
+            Mock.Get(MockableBoard)
                 .Setup(board => board.AddShip(It.IsAny<IShip>()))
                 .Returns(true);
         }
@@ -30,10 +30,9 @@ namespace BattleShip.Application.Test
             base.Act();
             BoardService
                 .AddShip(
-                    Board,
+                    MockableBoard,
                     BoardOrientation.Vertical,
-                    3,
-                    5,
+                    new Point(3, 5),
                     4);
         }
 

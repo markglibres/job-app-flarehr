@@ -3,14 +3,14 @@ using BattleShip.Domain.SeedWork;
 
 namespace BattleShip.Application.Test.SeedWork
 {
-    public abstract class GivenFakeBoard : GivenBoard80X40Service
+    public abstract class GivenMockableBoard : GivenBoard80X40Service
     {
-        protected IBoard Board { get; set; }
+        protected IBoard MockableBoard { get; set; }
 
         protected override void Arrange()
         {
             base.Arrange();
-            Board = Fixture.Create<IBoard>();
+            MockableBoard = Fixture.Create<IBoard>();
         }
     }
 }

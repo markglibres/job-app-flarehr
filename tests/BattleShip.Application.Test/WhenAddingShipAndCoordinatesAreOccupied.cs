@@ -28,8 +28,7 @@ namespace BattleShip.Application.Test
                 .AddShip(
                     MockableBoard,
                     BoardOrientation.Vertical,
-                    10,
-                    15,
+                    new Point(10, 15), 
                     10);
         }
 

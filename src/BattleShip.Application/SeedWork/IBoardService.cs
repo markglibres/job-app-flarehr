@@ -1,4 +1,5 @@
-﻿using BattleShip.Domain.SeedWork;
+﻿using System.Drawing;
+using BattleShip.Domain.SeedWork;
 using BoardOrientation = BattleShip.Application.Constants.BoardOrientation;
 
 namespace BattleShip.Application.SeedWork
@@ -10,14 +11,12 @@ namespace BattleShip.Application.SeedWork
         bool AddShip(
             IBoard board,
             BoardOrientation orientation,
-            int row,
-            int column,
+            Point startingLocation,
             int length);
 
         bool Attack(
             IBoard board,
-            int xCoordinate,
-            int yCoordinate);
+            Point location);
 
         bool IsSunk(IBoard board);
     }
