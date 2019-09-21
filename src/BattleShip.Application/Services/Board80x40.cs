@@ -40,7 +40,7 @@ namespace BattleShip.Application.Services
             IBoard board,
             Point location)
         {
-            return false;
+            return board.Attack(location);
         }
 
         public bool IsSunk(IBoard board)

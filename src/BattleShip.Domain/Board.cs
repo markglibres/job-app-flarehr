@@ -56,6 +56,11 @@ namespace BattleShip.Domain
                 .All(string.IsNullOrWhiteSpace);
         }
 
+        public bool Attack(Point location)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private void AddShip(string shipId, IEnumerable<Point> location)
         {
             location
