@@ -29,7 +29,7 @@ namespace BattleShip.Domain.Test.ShipTests
         }
 
         [Fact]
-        public void Should_Have_Operational_Status()
+        public void Should_Have_Sunk_Status()
         {
             Assert.Equal(ShipStatus.Sunk, Ship.Status);
         }
