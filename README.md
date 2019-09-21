@@ -2,6 +2,9 @@
 
 A simple battleship programming exercise using C# dotnetcore. The project includes a simple battle simulator.
 
+## Simulator Screenshot Output
+![Simulator Output](https://github.com/markglibres/job-app-flarehr/blob/master/assets/simulator-output.png?raw=true)
+
 ## PreRequisites 
 * DotNetCore >= 2.2 
 
@@ -25,6 +28,5 @@ A simple battleship programming exercise using C# dotnetcore. The project includ
   dotnet run
   ```
 
-## Screenshot 
 
 
