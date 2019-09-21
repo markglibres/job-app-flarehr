@@ -19,5 +19,6 @@ namespace BattleShip.Application.SeedWork
             int xCoordinate,
             int yCoordinate);
 
+        bool IsSunk(IBoard board);
     }
 }

@@ -10,14 +10,13 @@ namespace BattleShip.Domain
     {
         private readonly string[,] _area;
         private readonly List<IShip> _ships;
-        public int Rows { get; }
-        public int Columns { get; }
+
+        public IReadOnlyCollection<IShip> Ships
+            => _ships.AsReadOnly();
 
         public Board(int rows, int columns)
         {
-            Rows = rows;
-            Columns = columns;
-            _area = new string[Rows, Columns];
+            _area = new string[rows, columns];
             _ships = new List<IShip>();
         }
 

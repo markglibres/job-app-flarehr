@@ -10,5 +10,6 @@ namespace BattleShip.Domain.SeedWork
         string GetShipId(Point point);
         bool AddShip(IShip ship);
         bool IsVacant(IEnumerable<Point> location);
+        IReadOnlyCollection<IShip> Ships { get; }
     }
 }

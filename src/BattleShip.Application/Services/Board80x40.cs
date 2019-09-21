@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
+using BattleShip.Application.Constants;
 using BattleShip.Application.SeedWork;
 using BattleShip.Domain;
-using BattleShip.Domain.Constants;
 using BattleShip.Domain.SeedWork;
-using BoardOrientation = BattleShip.Application.Constants.BoardOrientation;
 
 namespace BattleShip.Application.Services
 {
@@ -18,16 +16,16 @@ namespace BattleShip.Application.Services
         }
 
         public bool AddShip(
-            IBoard board, 
-            BoardOrientation orientation, 
-            int row, 
+            IBoard board,
+            BoardOrientation orientation,
+            int row,
             int column,
             int length)
         {
             var coordinates = GetCoordinates(orientation,
-                row,
-                column,
-                length)
+                    row,
+                    column,
+                    length)
                 .ToList();
 
             if (!board.IsVacant(coordinates.Select(c => c.Location)))
@@ -45,6 +43,11 @@ namespace BattleShip.Application.Services
             int yCoordinate)
         {
             return false;
+        }
+
+        public bool IsSunk(IBoard board)
+        {
+            return board.IsSunk();
         }
 
         private static IEnumerable<Coordinate> GetCoordinates(
@@ -72,12 +75,11 @@ namespace BattleShip.Application.Services
             {
                 for (var j = column; j < endColumn; j++)
                 {
-                    coordinates.Add(new Coordinate(i,j));
+                    coordinates.Add(new Coordinate(i, j));
                 }
             }
 
             return coordinates;
         }
     }
-
 }

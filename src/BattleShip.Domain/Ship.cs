@@ -9,15 +9,20 @@ namespace BattleShip.Domain
 {
     public class Ship : IShip
     {
+        private readonly IEnumerable<Coordinate> _coordinates;
+
         public Ship(IEnumerable<Coordinate> coordinates)
         {
             Id = Guid.NewGuid();
-            Coordinates = coordinates;
+            _coordinates = coordinates;
             Status = ShipStatus.Operational;
         }
 
         public Guid Id { get; }
-        public IEnumerable<Coordinate> Coordinates { get; }
+
+        public IReadOnlyCollection<Coordinate> Coordinates 
+            => _coordinates.ToList().AsReadOnly();
+
         public ShipStatus Status { get; }
         public void Hit(Point point)
         {

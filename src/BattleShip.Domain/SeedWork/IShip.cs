@@ -8,7 +8,7 @@ namespace BattleShip.Domain.SeedWork
     public interface IShip
     {
         Guid Id { get; }
-        IEnumerable<Coordinate> Coordinates { get; }
+        IReadOnlyCollection<Coordinate> Coordinates { get; }
         ShipStatus Status { get; }
         void Hit(Point point);
 
