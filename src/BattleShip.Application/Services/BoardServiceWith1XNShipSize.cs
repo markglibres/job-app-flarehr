@@ -8,10 +8,8 @@ using BattleShip.Domain.SeedWork;
 
 namespace BattleShip.Application.Services
 {
-    public abstract class BoardWith1XnShipSize : IBoardService
+    public class BoardServiceWith1XnShipSize : IBoardService
     {
-        public abstract IBoard CreateBoard();
-
         public bool AddShip(
             IBoard board,
             BoardOrientation orientation,
@@ -23,11 +21,13 @@ namespace BattleShip.Application.Services
                     length)
                 .ToList();
 
-            if (!board.IsVacant(coordinates.Select(c => c.Location)))
-            {
-                return false;
-            }
+            var maxRow = coordinates.Max(c => c.Location.X);
+            var maxColumn = coordinates.Max(c => c.Location.Y);
 
+            if (maxRow >= board.TotalRows || maxColumn >= board.TotalColumns) return false;
+
+            if (!board.IsVacant(coordinates.Select(c => c.Location))) return false;
+            
             var ship = new Ship(coordinates);
             return board.AddShip(ship);
         }

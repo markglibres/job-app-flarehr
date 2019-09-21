@@ -1,5 +1,7 @@
 ﻿using BattleShip.Application.SeedWork;
 using BattleShip.Application.Services;
+using BattleShip.Domain;
+using BattleShip.Domain.SeedWork;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -13,7 +15,8 @@ namespace BattleShip.DependencyInjection
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddLogging(configure => configure.AddConsole());
 
-            serviceCollection.AddSingleton<IBoardService, Board10X10>();
+            serviceCollection.AddSingleton<IBoardService, BoardServiceWith1XnShipSize>();
+            serviceCollection.AddTransient<IBoard>(c => new Board(10, 10));
 
             return serviceCollection;
         }

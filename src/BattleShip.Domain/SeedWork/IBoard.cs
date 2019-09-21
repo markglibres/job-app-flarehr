@@ -11,5 +11,8 @@ namespace BattleShip.Domain.SeedWork
         bool AddShip(IShip ship);
         bool IsVacant(IEnumerable<Point> location);
         bool Attack(Point location);
+
+        int TotalRows { get; }
+        int TotalColumns { get; }
     }
 }

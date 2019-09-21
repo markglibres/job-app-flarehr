@@ -5,7 +5,7 @@ using Xunit;
 
 namespace BattleShip.Application.Test
 {
-    public class WhenAttackingAnOccupiedLocation : GivenMockableBoard
+    public class WhenAttackingAnOccupiedLocation : GivenMockBoard
     {
         private Point _locationToAttack;
 
@@ -18,13 +18,13 @@ namespace BattleShip.Application.Test
         protected override void Act()
         {
             base.Act();
-            BoardService.Attack(MockableBoard, _locationToAttack);
+            BoardServiceWith1XnShipSize.Attack(MockBoard, _locationToAttack);
         }
 
         [Fact]
         public void Should_Invoke_Attack_Method()
         {
-            Mock.Get(MockableBoard)
+            Mock.Get(MockBoard)
                 .Verify(b => b.Attack(_locationToAttack), Times.Once);
         }
     }

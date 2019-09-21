@@ -1,5 +1,7 @@
 ﻿using System;
 using BattleShip.Application.SeedWork;
+using BattleShip.Domain.SeedWork;
+using BattleShip.Simulators;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BattleShip
@@ -12,10 +14,9 @@ namespace BattleShip
         {
             Configure();
             var boardService = ServiceProvider.GetService<IBoardService>();
+            var board = ServiceProvider.GetService<IBoard>();
 
-            var board = boardService.CreateBoard();
-
-            Console.WriteLine("Hello World");
+            SimpleSimulator.Simulate(boardService, board);
         }
 
         private static void Configure()

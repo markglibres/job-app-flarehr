@@ -10,6 +10,8 @@ namespace BattleShip.Domain
     {
         private readonly string[,] _area;
         private readonly List<IShip> _ships;
+        public int TotalRows => _area.GetLength(0);
+        public int TotalColumns => _area.GetLength(1);
 
         public IReadOnlyCollection<IShip> Ships
             => _ships.AsReadOnly();

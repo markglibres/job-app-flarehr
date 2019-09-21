@@ -8,15 +8,15 @@ using Xunit;
 
 namespace BattleShip.Application.Test
 {
-    public class WhenAddingShipAndCoordinatesAreVacant : GivenMockableBoard
+    public class WhenAddingShipAndCoordinatesAreVacant : GivenMockBoard
     {
         protected override void Arrange()
         {
             base.Arrange();
-            Mock.Get(MockableBoard)
+            Mock.Get(MockBoard)
                 .Setup(board => board.AddShip(It.IsAny<IShip>()))
                 .Returns(true);
-            Mock.Get(MockableBoard)
+            Mock.Get(MockBoard)
                 .Setup(board => board.IsVacant(It.IsAny<IEnumerable<Point>>()))
                 .Returns(true);
         }
@@ -24,9 +24,9 @@ namespace BattleShip.Application.Test
         protected override void Act()
         {
             base.Act();
-            BoardService
+            BoardServiceWith1XnShipSize
                 .AddShip(
-                    MockableBoard,
+                    MockBoard,
                     BoardOrientation.Vertical,
                     new Point(10, 15),
                     10);
@@ -35,7 +35,7 @@ namespace BattleShip.Application.Test
         [Fact]
         public void Should_Invoke_AddShip_Method_Only_Once()
         {
-            Mock.Get(MockableBoard)
+            Mock.Get(MockBoard)
                 .Verify(board => board.AddShip(It.IsAny<IShip>()), Times.Once);
         }
     }

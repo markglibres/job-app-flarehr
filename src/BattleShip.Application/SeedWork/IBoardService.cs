@@ -6,8 +6,6 @@ namespace BattleShip.Application.SeedWork
 {
     public interface IBoardService
     {
-        IBoard CreateBoard();
-
         bool AddShip(
             IBoard board,
             BoardOrientation orientation,
