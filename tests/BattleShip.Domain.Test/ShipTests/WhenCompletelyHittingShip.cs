@@ -29,16 +29,6 @@ namespace BattleShip.Domain.Test.ShipTests
         }
 
         [Fact]
-        public void Should_Match_Targets_To_All_Coordinates()
-        {
-            Assert.All(Coordinates,
-                coordinate =>
-                {
-                    Assert.Contains(coordinate.Location, _targetCoordinates);
-                });
-        }
-
-        [Fact]
         public void Should_Have_Operational_Status()
         {
             Assert.Equal(ShipStatus.Sunk, Ship.Status);
