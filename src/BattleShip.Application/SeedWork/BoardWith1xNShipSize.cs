@@ -8,13 +8,9 @@ using BattleShip.Domain.SeedWork;
 
 namespace BattleShip.Application.Services
 {
-    public class Board80X40 : IBoardService
+    public abstract class BoardWith1XnShipSize : IBoardService
     {
-        public IBoard CreateBoard()
-        {
-            var battleGround = new Board(80, 40);
-            return battleGround;
-        }
+        public abstract IBoard CreateBoard();
 
         public bool AddShip(
             IBoard board,

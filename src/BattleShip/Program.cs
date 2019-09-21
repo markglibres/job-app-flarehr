@@ -1,12 +1,28 @@
 ﻿using System;
+using BattleShip.Application.SeedWork;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BattleShip
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static IServiceProvider ServiceProvider;
+
+        private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Configure();
+            var boardService = ServiceProvider.GetService<IBoardService>();
+
+            var board = boardService.CreateBoard();
+
+            Console.WriteLine("Hello World");
+        }
+
+        private static void Configure()
+        {
+            ServiceProvider = DependencyInjection.ServiceProvider
+                .ConfigureServices()
+                .BuildServiceProvider();
         }
     }
 }
