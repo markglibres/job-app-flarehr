@@ -6,7 +6,7 @@ using BattleShip.Domain.Test.SeedWork;
 using Moq;
 using Xunit;
 
-namespace BattleShip.Domain.Test
+namespace BattleShip.Domain.Test.BoardTests
 {
     public class WhenAddingShipOutsideTheBoundary : GivenBoard80X40
     {

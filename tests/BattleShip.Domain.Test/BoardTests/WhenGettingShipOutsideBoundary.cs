@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using AutoFixture;
-using BattleShip.Domain.SeedWork;
 using BattleShip.Domain.Test.SeedWork;
-using Moq;
 using Xunit;
 
-namespace BattleShip.Domain.Test
+namespace BattleShip.Domain.Test.BoardTests
 {
     public class WhenGettingShipOutsideBoundary : GivenBoard80X40
     {

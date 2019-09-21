@@ -2,7 +2,7 @@
 using BattleShip.Domain.Test.SeedWork;
 using Xunit;
 
-namespace BattleShip.Domain.Test
+namespace BattleShip.Domain.Test.BoardTests
 {
     public class WhenCreatingBoard : GivenBoard80X40
     {
@@ -16,6 +16,12 @@ namespace BattleShip.Domain.Test
                     Assert.True(string.IsNullOrWhiteSpace(Board.GetShipId(new Point(row, column))));
                 }
             }
+        }
+
+        [Fact]
+        public void Should_Contain_No_Ship()
+        {
+            Assert.Equal(0, Board.Ships.Count);
         }
     }
 }

@@ -6,7 +6,7 @@ using BattleShip.Domain.Test.SeedWork;
 using Moq;
 using Xunit;
 
-namespace BattleShip.Domain.Test
+namespace BattleShip.Domain.Test.BoardTests
 {
     public class WhenGettingShip : GivenBoard80X40
     {
@@ -34,7 +34,7 @@ namespace BattleShip.Domain.Test
             base.Act();
             _shipIds = _ship
                 .Coordinates
-                .Select(c => Board.GetShipId(c.Location));
+                .Select<Coordinate, string>(c => Board.GetShipId(c.Location));
         }
 
         [Fact]

@@ -58,7 +58,13 @@ namespace BattleShip.Domain
 
         public bool Attack(Point location)
         {
-            throw new System.NotImplementedException();
+            var shipId = GetShipId(location);
+            if (string.IsNullOrWhiteSpace(shipId)) return false;
+
+            var ship = _ships.Single(s => s.Id.ToString() == shipId);
+            ship.Hit(location);
+
+            return true;
         }
 
         private void AddShip(string shipId, IEnumerable<Point> location)

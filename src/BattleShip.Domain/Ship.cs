@@ -15,7 +15,6 @@ namespace BattleShip.Domain
         {
             Id = Guid.NewGuid();
             _coordinates = coordinates;
-            Status = ShipStatus.Operational;
         }
 
         public Guid Id { get; }
@@ -23,7 +22,11 @@ namespace BattleShip.Domain
         public IReadOnlyCollection<Coordinate> Coordinates 
             => _coordinates.ToList().AsReadOnly();
 
-        public ShipStatus Status { get; }
+        public ShipStatus Status 
+            => _coordinates.All(c => c.Status == CoordinateStatus.Hit)
+            ? ShipStatus.Sunk
+            : ShipStatus.Operational;
+
         public void Hit(Point point)
         {
             var coordinate = Coordinates

@@ -5,7 +5,7 @@ using BattleShip.Domain.Test.SeedWork;
 using Moq;
 using Xunit;
 
-namespace BattleShip.Domain.Test
+namespace BattleShip.Domain.Test.BoardTests
 {
     public class WhenAddingShip : GivenBoard80X40
     {
@@ -42,7 +42,7 @@ namespace BattleShip.Domain.Test
         public void Should_Confirm_Ship_Location()
         {
             Assert.All(_ship.Coordinates,
-                coordinate => { Assert.Equal(_ship.Id.ToString(), Board.GetShipId(coordinate.Location)); });
+                coordinate => { Assert.Equal(_ship.Id.ToString(), (string) Board.GetShipId(coordinate.Location)); });
         }
 
     }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using AutoFixture;
 using BattleShip.Domain.SeedWork;
@@ -7,9 +6,9 @@ using BattleShip.Domain.Test.SeedWork;
 using Moq;
 using Xunit;
 
-namespace BattleShip.Domain.Test
+namespace BattleShip.Domain.Test.BoardTests
 {
-    public class WhenCheckingVacantCoordinates : GivenBoard80X40
+    public class WhenCheckingOccupiedCoordinates : GivenBoard80X40
     {
         private IShip _ship;
         private bool _isVacant;
@@ -33,13 +32,13 @@ namespace BattleShip.Domain.Test
         protected override void Act()
         {
             base.Act();
-            _isVacant = Board.IsVacant(_ship.Coordinates.Select(c => new Point(c.Location.X + 1, c.Location.Y + 1)));
+            _isVacant = Board.IsVacant(_ship.Coordinates.Select(c => c.Location));
         }
 
         [Fact]
-        public void IsVacant_Should_Return_True()
+        public void IsVacant_Should_Return_False()
         {
-            Assert.True(_isVacant);
+            Assert.False(_isVacant);
         }
 
         

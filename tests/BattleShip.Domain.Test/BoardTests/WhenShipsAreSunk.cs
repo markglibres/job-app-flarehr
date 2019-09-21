@@ -5,26 +5,26 @@ using BattleShip.Domain.Test.SeedWork;
 using Moq;
 using Xunit;
 
-namespace BattleShip.Domain.Test
+namespace BattleShip.Domain.Test.BoardTests
 {
-    public class WhenShipsAreNotSunk : GivenBoard80X40
+    public class WhenShipsAreSunk : GivenBoard80X40
     {
         private bool _isSunk;
 
         protected override void Arrange()
         {
             base.Arrange();
-            var operationalShip = Fixture.Create<IShip>();
-            var sunkShip = Fixture.Create<IShip>();
-            Mock.Get(operationalShip)
+            var sunkShip1 = Fixture.Create<IShip>();
+            var sunkShip2 = Fixture.Create<IShip>();
+            Mock.Get(sunkShip1)
                 .SetupGet(s => s.Status)
-                .Returns(ShipStatus.Operational);
-            Mock.Get(sunkShip)
+                .Returns(ShipStatus.Sunk);
+            Mock.Get(sunkShip2)
                 .SetupGet(s => s.Status)
                 .Returns(ShipStatus.Sunk);
 
-            Board.AddShip(operationalShip);
-            Board.AddShip(sunkShip);
+            Board.AddShip(sunkShip1);
+            Board.AddShip(sunkShip2);
         }
 
         protected override void Act()
@@ -34,9 +34,9 @@ namespace BattleShip.Domain.Test
         }
 
         [Fact]
-        public void Should_Return_False_If_Not_All_Ships_Sunk()
+        public void Should_Return_True_If_All_Ships_Sunk()
         {
-            Assert.False(_isSunk);
+            Assert.True(_isSunk);
         }
     }
 }

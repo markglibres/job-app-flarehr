@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using AutoFixture;
-using BattleShip.Domain.SeedWork;
 using BattleShip.Domain.Test.SeedWork;
-using Moq;
 using Xunit;
 
-namespace BattleShip.Domain.Test
+namespace BattleShip.Domain.Test.BoardTests
 {
-    public class WhenCheckingVacancyOutsideBoundary : GivenBoard80X40
+    public class WhenAttackingOutsideBoundary : GivenBoard80X40
     {
-        private List<Point> _outsideBoundaries;
+        private List<Point> _locationsToAttack;
 
         protected override void Arrange()
         {
             base.Arrange();
-            _outsideBoundaries = new List<Point>
+            _locationsToAttack = new List<Point>
             {
                 new Point(93, 45),
                 new Point(93, 46),
@@ -29,9 +25,10 @@ namespace BattleShip.Domain.Test
         [Fact]
         public void Should_Throw_Exception()
         {
-            Assert.Throws<IndexOutOfRangeException>(() => Board.IsVacant(_outsideBoundaries));
+            _locationsToAttack.ForEach(location =>
+            {
+                Assert.Throws<IndexOutOfRangeException>(() => Board.Attack(location));
+            });
         }
-
-        
     }
 }
