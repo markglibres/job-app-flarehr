@@ -21,6 +21,8 @@ namespace BattleShip.Application.Simulators
 
         public void Simulate(IBoard board)
         {
+            Console.Clear();
+
             AddRandomShipsToBoard(_boardService, board);
             var attackedLocations = new List<Point>();
             var successfulAttackedLocations = new List<Point>();
@@ -57,7 +59,7 @@ namespace BattleShip.Application.Simulators
             } while (!_boardService.IsSunk(board));
 
             Console.WriteLine();
-            Console.WriteLine("All your base are belong to us!");
+            Console.WriteLine("\"All your base are belong to us!\"");
             Console.WriteLine();
         }
 
@@ -97,7 +99,12 @@ namespace BattleShip.Application.Simulators
             IBoardService boardService,
             IBoard board)
         {
-            var shipsToAdd = board.TotalRows / 3;
+            var random = new Random();
+            var shipsToAdd = random.Next(board.TotalRows / 3, board.TotalRows / 2);
+            
+            Console.WriteLine($"Generating {shipsToAdd} random ships");
+            Console.WriteLine();
+            Thread.Sleep(500);
 
             while (board.Ships.Count < shipsToAdd)
             {
@@ -105,17 +112,29 @@ namespace BattleShip.Application.Simulators
                 var coordinates = GetRandomCoordinates(board);
                 var shipSize = GetRandomShipSize();
 
-                boardService.AddShip(board,
+                var isAdded = boardService.AddShip(board,
                     orientation,
                     coordinates,
                     shipSize);
+
+                if(!isAdded) continue;
+
+                Console.WriteLine($"Ship #{board.Ships.Count} added: ");
+                Console.WriteLine($"  orientation: {orientation}");
+                Console.WriteLine($"  size: {shipSize}");
+                Console.WriteLine($"  coordinates: {string.Join(',', board.Ships.Last().Coordinates.Select(c => c.Location.ToString()))}");
+                Console.WriteLine();
+                Thread.Sleep(1000);
             }
+
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
         private static BoardOrientation GetRandomBoardOrientation()
         {
             var random = new Random();
-            var orientation = random.Next(0, 1);
+            var orientation = random.Next(0, 2);
 
             return (BoardOrientation) orientation;
         }
