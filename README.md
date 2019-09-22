@@ -13,6 +13,12 @@ A simple battleship programming exercise using C# dotnetcore. The project includ
 * Application = implementation of simulator and application logic. 
 * Domain = domain logic for board and ship. 
 
+## Implementation Detail
+* Board = implemented as a 2D array of strings. Value stored is the shipId (UUID) 
+* Ship = contains the details of the ship such as all coordinates on the 2D plane and its status (HIT or ACTIVE), ship status (OPERATIONAL or SUNK) 
+* BoardServiceWith1XNShipSize = service class for board. dictates the application logic (such as ship with size 1xN).
+* SimpleSimulator = a simulator for the battle game for 1 board. will randomly generate number of ships based on board size (defined on DI container). will then select random points from the 2D plane and attack. displays attack, board and ship status. 
+
 ## How to run test 
 1. open console 
 2. navigate to project src folder "[project root]\src" 
