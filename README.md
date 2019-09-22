@@ -8,6 +8,11 @@ A simple battleship programming exercise using C# dotnetcore. The project includ
 ## PreRequisites 
 * DotNetCore >= 2.2 
 
+## Project Structure 
+* BattleShip = console app that calls simulator and contains the DI container. 
+* Application = implementation of simulator and application logic. 
+* Domain = domain logic for board and ship. 
+
 ## How to run test 
 1. open console 
 2. navigate to project src folder "[project root]\src" 
